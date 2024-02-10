@@ -1,5 +1,5 @@
 import { defaultTheme } from "react-admin";
-import { red, grey, blueGrey, lightBlue, blue } from "@mui/material/colors";
+import { red, blueGrey, blue } from "@mui/material/colors";
 
 export const theme = {
   ...defaultTheme,
