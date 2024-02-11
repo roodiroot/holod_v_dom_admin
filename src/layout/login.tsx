@@ -86,13 +86,18 @@ const Login = () => {
               marginTop: "1em",
               mx: "auto",
               textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
               maxWidth: "200px",
               color: (theme) => theme.palette.grey[500],
             }}
           >
-            Developed by Matryoshka studio for Sotbays
+            Разработанно{" "}
+            <a
+              style={{ textDecoration: "underline", color: "#7b7b7b" }}
+              href='https://matryoshka-studio.ru'
+            >
+              Matryoshka studio
+            </a>{" "}
+            для сайта &laquo;Холод в&nbsp;Дом&raquo;
           </Box>
           <Box sx={{ padding: "0 1em 1em 1em" }}>
             <Box sx={{ marginTop: "1em" }}>

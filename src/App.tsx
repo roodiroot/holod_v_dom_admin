@@ -6,11 +6,12 @@ import dataProductProviders from "./providers/dataProductProviders";
 import types from "./components/type";
 import brands from "./components/brand";
 import products from "./components/product";
-import { authProvider } from "./providers/authProviders";
+import { authProvider } from "./providers/authProvider/authProvider";
 import { theme } from "./theme/theme";
 import ruMessages from "./providers/ruMess";
 import { Layout } from "./layout";
 import Login from "./layout/login";
+import authProviders from "./providers/authProviders";
 
 const dataProvider = combineDataProviders((resource) => {
   switch (resource) {
@@ -37,15 +38,15 @@ function App() {
   return (
     <Admin
       i18nProvider={i18nProvider}
-      authProvider={authProvider}
+      authProvider={authProviders}
       dataProvider={dataProvider}
       theme={theme}
       layout={Layout}
       loginPage={Login}
     >
+      <Resource name='product' {...products} options={{ label: "Товары" }} />
       <Resource name='type' {...types} options={{ label: "Типы" }} />
       <Resource name='brand' {...brands} options={{ label: "Бренды" }} />
-      <Resource name='product' {...products} options={{ label: "Товары" }} />
     </Admin>
   );
 }

@@ -2,17 +2,15 @@ import { AuthProvider, HttpError, fetchUtils } from "react-admin";
 import { jwtDecode } from "jwt-decode";
 
 const apiUrl = import.meta.env.VITE_REST_URL;
-// const httpClient = fetchUtils.fetchJson;
 
 const httpClient = (url: string, options: any = {}) => {
   if (!options.headers) {
     options.headers = new Headers({ Accept: "application/json" });
   }
   const token = localStorage.getItem("token");
-  debugger;
-  console.log(token);
   options.headers.set("Authorization", token);
-  return fetchUtils.fetchJson(url, options);
+  const resp = fetchUtils.fetchJson(url, options);
+  return resp;
 };
 
 interface UserResult {
@@ -23,10 +21,8 @@ interface UserResult {
   fullName: string;
 }
 
-export const authProvider: AuthProvider = {
+export const authProviders: AuthProvider = {
   login: async ({ username, password }) => {
-    debugger;
-    console.log("login");
     const { json } = await httpClient(`${apiUrl}/auth/login`, {
       method: "POST",
       body: JSON.stringify({ email: username, password }),
@@ -62,7 +58,6 @@ export const authProvider: AuthProvider = {
   },
 
   logout: async () => {
-    console.log("logout");
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     localStorage.removeItem("permissions");
@@ -72,23 +67,19 @@ export const authProvider: AuthProvider = {
     return;
   },
 
-  checkError: () => {
-    console.log("checkError");
-    return Promise.reject(
-      new HttpError("Forbidden", 403, {
-        message: "Странная ошибка.",
-      })
-    );
+  checkError: (error) => {
+    const status = error.status;
+    if (status === 401 || status === 403) {
+      localStorage.removeItem("auth");
+      return Promise.reject();
+    }
+    return Promise.resolve();
   },
 
   checkAuth: async () => {
-    console.log("check");
-    debugger;
     const { json } = await httpClient(`${apiUrl}/auth/refresh-tokens`, {
       credentials: "include",
     });
-    debugger;
-    console.log("TOKEN", json);
     if (json?.accessToken) {
       const user: UserResult = jwtDecode(json.accessToken);
       if (!user.roles.includes("ADMIN")) {
@@ -128,18 +119,15 @@ export const authProvider: AuthProvider = {
   },
 
   getPermissions: () => {
-    console.log("getPermissions");
     const role = localStorage.getItem("permissions");
-    debugger;
     return role ? Promise.resolve(role) : Promise.reject();
   },
 
   getIdentity: () => {
-    console.log("getIdentity");
     const persistedUser = localStorage.getItem("user");
     const user = persistedUser ? JSON.parse(persistedUser) : null;
     return Promise.resolve(user);
   },
 };
 
-export default authProvider;
+export default authProviders;
