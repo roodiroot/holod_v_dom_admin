@@ -6,7 +6,6 @@ import dataProductProviders from "./providers/dataProductProviders";
 import types from "./components/type";
 import brands from "./components/brand";
 import products from "./components/product";
-import { authProvider } from "./providers/authProvider/authProvider";
 import { theme } from "./theme/theme";
 import ruMessages from "./providers/ruMess";
 import { Layout } from "./layout";
