@@ -5,6 +5,7 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   preview: {
+    host: "holod-vdom.store",
     proxy: {
       "/api": {
         target: "https://api.holod-vdom.ru",
