@@ -5,9 +5,23 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   preview: {
     port: 3001,
+    proxy: {
+      "/api": {
+        target: "https://api.holod-vdom.ru",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
   server: {
     port: 3001,
+    proxy: {
+      "/api": {
+        target: "https://api.holod-vdom.ru",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
   plugins: [react()],
 });

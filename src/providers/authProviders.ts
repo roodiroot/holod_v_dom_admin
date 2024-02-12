@@ -64,6 +64,7 @@ export const authProviders: AuthProvider = {
     await httpClient(`${apiUrl}/auth/logout`, {
       credentials: "include",
     });
+
     return;
   },
 

@@ -10,7 +10,7 @@ import { theme } from "./theme/theme";
 import ruMessages from "./providers/ruMess";
 import { Layout } from "./layout";
 import Login from "./layout/login";
-import authProviders from "./providers/authProviders";
+import authProvider from "./providers/authProvider/authProvider";
 
 const dataProvider = combineDataProviders((resource) => {
   switch (resource) {
@@ -37,7 +37,7 @@ function App() {
   return (
     <Admin
       i18nProvider={i18nProvider}
-      authProvider={authProviders}
+      authProvider={authProvider}
       dataProvider={dataProvider}
       theme={theme}
       layout={Layout}
